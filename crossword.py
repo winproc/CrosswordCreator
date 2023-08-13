@@ -22,17 +22,18 @@ def GetCharacterOccurences(WordList):
     CharacterList = {}
 
     for String in WordList:
-        ListCopy = CharacterList
+        Counted = []
 
-        for Char in String:
-            if CharacterList[Char]:
-                if ListCopy[Char] - CharacterList[Char] == 0: # Prevent duplicate chars in same string from being counted
-                    ListCopy[Char] += 1
-                
+        for Character in String:
+            if Character in CharacterList:
+                if not (Character in Counted):
+                    CharacterList[Character] += 1
+                    Counted.append(Character)
             else:
-                ListCopy[Char] = 1
-
-        CharacterList = ListCopy
+                CharacterList[Character] = 1
+                Counted.append(Character)
+    
+    return CharacterList
 
 
 
@@ -41,6 +42,6 @@ def GenerateCanvas(Size):
 
     for XIndex in range(1, Size + 1):
         for YIndex in range(1, Size + 1):
-            CanvasDict['{0}{1}'.format(XIndex, YIndex)] = '-'
+            CanvasDict['{0},{1}'.format(XIndex, YIndex)] = '-'
     
     return CanvasDict
